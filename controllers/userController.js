@@ -17,7 +17,7 @@ exports.register = async (req, res, next) => {
     console.log(email);
     const oldUser=await userSchema.findOne({email});
     if(oldUser){
-     return res.send("user already exist ")
+     return res.status(400).send("user already exist ")
     }
     const user = await userSchema.create({
       fullname,
@@ -34,13 +34,13 @@ exports.register = async (req, res, next) => {
     res.cookie("token",token,option);
     // res.cookie("token","token");
     console.log("token",token);
-    res.send({
+    res.status(200).send({
       success:true,
       user:user
     });
     // res.sendFile(path.join(__dirname, "../views/recipe.html"));
   } catch (error) {
-    res.send("unsuccessfull");
+    res.status(400).send("unsuccessfull",error);
   }
 };
 exports.login = async (req, res, next) => {
@@ -85,7 +85,7 @@ exports.login = async (req, res, next) => {
   } catch (error) {
     res.status(404).send({
       success:false,
-      message:"unsuccessful"});
+      message:error});
     // res.status(404).
   }
 };
