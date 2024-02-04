@@ -11,7 +11,7 @@ require("dotenv").config();
 connectWithDb();
 
 app.use(cors({
-    origin:"http://localhost:3000",
+    origin:"https://zwigato-frontend-lqhbi4s5v-mohits-projects-4f157c63.vercel.app",
     // origin:"*",
     credentials:true,     
     }));
