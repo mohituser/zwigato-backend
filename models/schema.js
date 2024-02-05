@@ -22,7 +22,14 @@ const userSchema=new mongoose.Schema({
         minlength:[6,"password should be atleast 6 char"],
         select:false
     },
-
+   
+    orders:[{    
+        quantity:{type:Number},
+        address:{type:String},
+        phone:{type:String},
+        status:{type:String,default:"ordered"}
+         },],
+     role:{type:String,default:"customer"},
     forgotPasswordToken:String,
     forgotPasswordExpiry:Date,
     createdAt:{
@@ -54,4 +61,4 @@ userSchema.methods.getJwtToken=function(){
     this.forgotPasswordExpiry=Date.now()+60 * 60 * 1000;
     return forgotToken;
 }
-module.exports=mongoose.model("RecipeUser",userSchema);
+module.exports=mongoose.model("User",userSchema);

@@ -2,7 +2,8 @@ const express=require("express");
 
 const {home, register, login} =require( "../controllers/userController");
 // const { register, login, setpassword,  home, loginpage, update, forgotpass, resetpass, setNewpassword, errorpage, } = require("../controllers/userController");
-const { isLoggedIn } = require("../middleware/isLoggedIn");
+const { isLoggedIn, isAuthorized } = require("../middleware/isLoggedIn");
+const { updateOrderItem, getOrderItem, getAllOrderItem, updateStatus } = require("../controllers/orderController");
 const router=express.Router();
 
 router.route("/").get(home);
@@ -11,6 +12,10 @@ router.route("/").get(home);
 // router.route("/forgotpass").get(forgotpass);
 router.route("/register").post(register);
 router.route("/login").post(login);
+router.route("/updateOrderItem").post(isLoggedIn,updateOrderItem);
+router.route("/getOrders").get(isLoggedIn,getOrderItem);
+router.route("/getALLOrders").get(isLoggedIn,isAuthorized,getAllOrderItem);
+router.route("/updateOrderStatus").put(isLoggedIn,isAuthorized,updateStatus);
 
 // router.route("/resetpass").post(resetpass);
 // router.route("/setNewpassword/:id").post(setNewpassword);
@@ -20,6 +25,5 @@ router.route("/login").post(login);
 // router.route("/update").get(update);
 // router.route("/password/reset/:token").post(resetPassword);
 // router.route("/password/reset/:token").get(resetpass);
-// router.route("/updateUserDetails").post(isLoggedIn,updateUserDetails);
 
 module.exports=router;

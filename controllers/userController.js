@@ -51,7 +51,9 @@ exports.login = async (req, res, next) => {
     if (!email || !password) {
       return next(new customError("email and password is required"), 400);
     }
+    console.log("password.........")
     const user = await userSchema.findOne({ email }).select("+password");
+    console.log("password.........end......")
     if (!user) {
       // return next(new customError("you are not registered"), 400);
       console.log("user not found");
@@ -83,6 +85,7 @@ exports.login = async (req, res, next) => {
     // console.log(cookie.token);
     // res.render("updateform");
   } catch (error) {
+    console.log("error...",error)
     res.status(404).send({
       success:false,
       message:"unsuccessful"});
@@ -174,3 +177,29 @@ exports.setNewpassword = async (req, res, next) => {
 
   res.sendFile(path.join(__dirname, "../views/login.html"));
 };
+// exports.updateOrderItem=async(req,res)=>{
+//   try {
+    
+
+// let id=req.userId;
+// console.log("id.......",id);
+// const user=await userSchema.findById(id);
+// const orderedItem=req.body;
+// console.log("orderItem.....",orderedItem?.orderedItem,"user",user);
+// // res.send({mess:"success"});
+//    user.orders.push(orderedItem?.orderedItem);
+//    await user.save();
+// // let newItems=[];
+// // for(let i=0;i<orderedItem.length)
+// res.status(200).send({
+//   success:true,
+//   message:"order placed successfully",
+//   user:user
+// })
+// } catch (error) {
+//     console.log("errro",error);
+//     res.status(400).send(error);
+// }
+
+
+// }
