@@ -2,7 +2,7 @@ const path = require("path");
 const mailHelper = require("../utils/nodemailer");
 const userSchema = require("../models/schema");
 exports.home = (req, res, next) => {
-  res.send("hi everyone once again... again.....")
+  res.send("hi everyone ")
 };
 exports.errorpage = (req, res, next) => {
   // res.sendFile(path.join(__dirname, "../views/error.html"));
