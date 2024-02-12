@@ -36,7 +36,8 @@ exports.register = async (req, res, next) => {
     console.log("token",token);
     res.status(200).send({
       success:true,
-      user:user
+      user:user,
+      token:token
     });
     // res.sendFile(path.join(__dirname, "../views/recipe.html"));
   } catch (error) {
@@ -79,7 +80,8 @@ exports.login = async (req, res, next) => {
     // res.cookie("token",token,option);
     res.cookie("token", token, option).send({
       success:true,
-      user:user
+      user:user,
+      token:token
     })
       // .sendFile(path.join(__dirname, "../views/recipe.html"));
     // console.log(cookie.token);
