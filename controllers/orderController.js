@@ -101,3 +101,22 @@ exports.updateOrderItem=async(req,res)=>{
       
     }
   }
+exports.getOrderDetail=async(req,res)=>{
+    const id=req.params.id;
+    try{
+    const orderDetail=await orderSchema.findById(id);
+    res.status(200).send({
+      success:true,
+      message:"Order detail has not been fetched",
+      data:orderDetail
+     })
+    }
+    catch(error){
+     console.log(error);
+     res.status(400).send({
+      success:false,
+      message:"Order detail has not been fetched"
+     })
+    }
+    
+  }
