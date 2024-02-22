@@ -2,7 +2,7 @@ const path = require("path");
 const mailHelper = require("../utils/nodemailer");
 const userSchema = require("../models/schema");
 exports.home = (req, res, next) => {
-  res.send("hi everyone")
+  res.send("hi everyone .........again")
 };
 exports.errorpage = (req, res, next) => {
   // res.sendFile(path.join(__dirname, "../views/error.html"));
@@ -37,7 +37,7 @@ exports.register = async (req, res, next) => {
     res.status(200).send({
       success:true,
       user:user,
-      token
+      token:token
     });
     // res.sendFile(path.join(__dirname, "../views/recipe.html"));
   } catch (error) {
@@ -78,7 +78,6 @@ exports.login = async (req, res, next) => {
       httpOnly: true,
     };
     // res.cookie("token",token,option);
-    
     res.cookie("token", token, option).send({
       success:true,
       user:user,

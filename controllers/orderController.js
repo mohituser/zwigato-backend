@@ -88,7 +88,7 @@ exports.updateOrderItem=async(req,res)=>{
       res.status(200).send({
         success:true,
         message:"status updated",
-        order:order,
+        // order:order,
         
             })
       
@@ -101,7 +101,7 @@ exports.updateOrderItem=async(req,res)=>{
       
     }
   }
-  exports.getOrderDetail=async(req,res)=>{
+exports.getOrderDetail=async(req,res)=>{
     const id=req.params.id;
     try{
     const orderDetail=await orderSchema.findById(id);
@@ -120,4 +120,3 @@ exports.updateOrderItem=async(req,res)=>{
     }
     
   }
-

@@ -1,11 +1,10 @@
-
 const User=require("../models/schema");
 const jwt=require("jsonwebtoken");
 // const user = require("../models/user");
 exports.isLoggedIn=async(req,res,next)=>{
+    console.log("token.............")
     // const token=req.cookies.token ;
     const token=req.header("Authorization").replace("Bearer ", "");
-    console.log("token.............",token);
     if(!token){
         return next(new customError("Login first to access this page",401));
     }
@@ -17,8 +16,9 @@ exports.isLoggedIn=async(req,res,next)=>{
     next();
 }
 exports.isAuthorized=async(req,res,next)=>{
+    console.log("token.............")
+    // const token=req.cookies.token ;
     const token=req.header("Authorization").replace("Bearer ", "");
-    console.log("token.............",token)
     
     if(!token){
         return next(new customError("Login first to access this page",401));
