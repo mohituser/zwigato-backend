@@ -15,83 +15,109 @@ exports.register = async (req, res, next) => {
     const { fullname, email, password } = req.body;
     // let result;
     console.log(email);
+    console.log("user already exist before");
     const oldUser=await userSchema.findOne({email});
     if(oldUser){
-     return res.status(400).send("user already exist ")
+      console.log("user already exist after");
+    //  return res.status(400).send("user already exist ")
+    throw "user already exist";
     }
+    // console.log("user created before");
     const user = await userSchema.create({
       fullname,
       email,
       password,
     });
-    console.log(user);
+    
+    // console.log("user created after",user);
     const token = user.getJwtToken();
     const option = {
       expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
       httpOnly: true,
     };
     user.password=undefined;
-    res.cookie("token",token,option);
+    // res.cookie("token",token,option);
     // res.cookie("token","token");
-    console.log("token",token);
+    // console.log("token",token);
     res.status(200).send({
       success:true,
       user:user,
-      token:token
+      token:token,
+      message:"User Registered successfully"
     });
     // res.sendFile(path.join(__dirname, "../views/recipe.html"));
-  } catch (error) {
-    res.status(400).send("unsuccessfull",error);
+  } catch (err) {
+    res.send({
+      success :false,
+      error:true,
+      message:err
+    })
   }
 };
 exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    console.log("login controlleer")
+    // console.log("login controlleer")
     // console.log("cookeie",req.Co);
     if (!email || !password) {
-      return next(new customError("email and password is required"), 400);
+      throw "email and password is required";
     }
-    console.log("password.........")
+    // console.log("password.........")
     const user = await userSchema.findOne({ email }).select("+password");
-    console.log("password.........end......")
+    // console.log("password.........end......")
     if (!user) {
-      // return next(new customError("you are not registered"), 400);
-      console.log("user not found");
-      return res.status(400).send({
-        success:false,
-        message:"you are not registered",
+      // console.log("user not found");
+      throw "You are not registered"
+      // return res.status(400).send({
+      //   success:false,
+      //   message:"you are not registered",
 
-      })
+      // })
     }
     const isPasswordCorrect = await user.isValidatedPassword(password);
     if (!isPasswordCorrect) {
       // return next(new customError("wrong password "), 400);
-      res.status(404).send({
-        success:false,
-        message:"wrong password"});
+      // res.status(404).send({
+      //   success:false,
+      //   message:"wrong password"});
+      throw "Invalid creadentials"
     }
     user.password=undefined;
     const token = user.getJwtToken();
+    console.log("token",token);
     const option = {
       expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
       httpOnly: true,
+      // sameSite:"Lax"
     };
     // res.cookie("token",token,option);
-    res.cookie("token", token, option).send({
+    // res.status(200).send({
+    //   success:true,
+    //   user:user,
+    //   token:token,
+    //   message:"login"
+    // })
+console.log("login succccccccceeeeeeesssssssss")
+    res.status(200).send({
       success:true,
       user:user,
-      token:token
-    })
+      token:token,
+      message:"Login successfully"
+    });
       // .sendFile(path.join(__dirname, "../views/recipe.html"));
     // console.log(cookie.token);
     // res.render("updateform");
   } catch (error) {
     console.log("error...",error)
-    res.status(404).send({
+    res.send({
       success:false,
+      error:true,
       message:error});
-    // res.status(404).
+    // res.send({
+    //   success:false,
+    //   error:true,
+    //   message:error});
+  
   }
 };
 exports.resetpass = async (req, res, next) => {
